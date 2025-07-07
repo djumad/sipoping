@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\ImageDetectionController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UnorController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CekJadwalHariIni;
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Requests\UserLoginRequest;
 use Illuminate\Http\Request;
@@ -17,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix("/users")->group(function(){
     Route::post("/login" , [UserController::class , "login"]);
     Route::middleware(UserMiddleware::class)->group(function(){
-        Route::get("/me" , [UserController::class ,"me"]);
+        Route::get("/me" , [UserController::class ,"me"])->middleware(CekJadwalHariIni::class);
     });
 });
 
@@ -45,3 +48,6 @@ Route::prefix("/pegawai")->middleware([UserMiddleware::class , AdminMiddleware::
     Route::delete("/{id}" , [PegawaiController::class ,"destroy"]);
 });
 
+Route::prefix("/absen")->middleware(UserMiddleware::class)->group(function(){
+    Route::post("/{id}" , [AbsenController::class ,"store"]);
+});

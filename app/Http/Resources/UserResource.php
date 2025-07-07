@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             "jabatan" => $this->pegawai->jabatan->pluck("nama"),
             "status" => $this->pegawai->status->pluck("nama"),
             "unor" => $this->pegawai->unor->pluck("nama"),
+            "kordinat" => $this->pegawai->unor->pluck("kordinat"),
             "role" => $this->role,
         ];
     }

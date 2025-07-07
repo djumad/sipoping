@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('pekerjaan');
             $table->string('dokumentasi');
             $table->string('titik_lokasi');
+            $table->timestamp('jam');
             $table->timestamps();
         });
     }
